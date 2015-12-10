@@ -18,6 +18,13 @@ public class clsANNOUNCEMENT
         return ann;
     }
 
+    public static Announcement getAnnouncementbyAnnouncementID(int AnnID)
+    {
+        dbDataContext db = new dbDataContext();
+        Announcement ann = (from x in db.Announcements where x.IsActive == true && x.ID == AnnID select x).SingleOrDefault();
+        return ann;
+    }
+
     public static Announcement[] getAnnouncementbyCourseID(int inputCourseID)
     {
         dbDataContext db = new dbDataContext();

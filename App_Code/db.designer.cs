@@ -181,6 +181,14 @@ public partial class dbDataContext : System.Data.Linq.DataContext
 			return this.GetTable<USERTYPE>();
 		}
 	}
+	
+	public System.Data.Linq.Table<UserAnnouncementRelation> UserAnnouncementRelations
+	{
+		get
+		{
+			return this.GetTable<UserAnnouncementRelation>();
+		}
+	}
 }
 
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Announcement")]
@@ -2718,6 +2726,69 @@ public partial class USERTYPE : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this.SendPropertyChanging();
 		entity.USERTYPE = null;
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UserAnnouncementRelation")]
+public partial class UserAnnouncementRelation
+{
+	
+	private int _AnnouncementID;
+	
+	private int _UserID;
+	
+	private System.Nullable<bool> _IsActive;
+	
+	public UserAnnouncementRelation()
+	{
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnnouncementID", DbType="Int NOT NULL")]
+	public int AnnouncementID
+	{
+		get
+		{
+			return this._AnnouncementID;
+		}
+		set
+		{
+			if ((this._AnnouncementID != value))
+			{
+				this._AnnouncementID = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="Int NOT NULL")]
+	public int UserID
+	{
+		get
+		{
+			return this._UserID;
+		}
+		set
+		{
+			if ((this._UserID != value))
+			{
+				this._UserID = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsActive", DbType="Bit")]
+	public System.Nullable<bool> IsActive
+	{
+		get
+		{
+			return this._IsActive;
+		}
+		set
+		{
+			if ((this._IsActive != value))
+			{
+				this._IsActive = value;
+			}
+		}
 	}
 }
 #pragma warning restore 1591

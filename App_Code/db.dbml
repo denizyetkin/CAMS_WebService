@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CAMS_NEW" Class="dbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=HAKKI-PC;Initial Catalog=CAMS_NEW;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CAMS_NEWConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DENIZ;Initial Catalog=CAMS_NEW;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CAMS_NEWConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Announcement" Member="Announcements">
     <Type Name="Announcement">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -13,6 +13,7 @@
       <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="CategoryType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Announcement_UserAnnouncementRelation" Member="UserAnnouncementRelations" ThisKey="ID" OtherKey="AnnouncementID" Type="UserAnnouncementRelation" />
       <Association Name="Category_Announcement" Member="Category" ThisKey="CategoryType" OtherKey="ID" Type="Category" IsForeignKey="true" />
       <Association Name="Course_Announcement" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
       <Association Name="Department_Announcement" Member="Department" ThisKey="DeptID" OtherKey="ID" Type="Department" IsForeignKey="true" />
@@ -111,6 +112,7 @@
       <Column Name="Durum" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="USER_CATEGORY_USER" Member="CATEGORY_USERs" ThisKey="UserID" OtherKey="UserID" Type="CATEGORY_USER" />
       <Association Name="USER_Instructor" Member="Instructors" ThisKey="UserID" OtherKey="UserID" Type="Instructor" />
+      <Association Name="USER_UserAnnouncementRelation" Member="UserAnnouncementRelations" ThisKey="UserID" OtherKey="UserID" Type="UserAnnouncementRelation" />
       <Association Name="USERTYPE_USER" Member="USERTYPE" ThisKey="UserTypeID" OtherKey="UserTypeID" Type="USERTYPE" IsForeignKey="true" />
     </Type>
   </Table>
@@ -120,6 +122,15 @@
       <Column Name="UserType" Member="UserType1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Durum" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="USERTYPE_USER" Member="USERs" ThisKey="UserTypeID" OtherKey="UserTypeID" Type="USER" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserAnnouncementRelation" Member="UserAnnouncementRelations">
+    <Type Name="UserAnnouncementRelation">
+      <Column Name="AnnouncementID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Announcement_UserAnnouncementRelation" Member="Announcement" ThisKey="AnnouncementID" OtherKey="ID" Type="Announcement" IsForeignKey="true" />
+      <Association Name="USER_UserAnnouncementRelation" Member="USER" ThisKey="UserID" OtherKey="UserID" Type="USER" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
