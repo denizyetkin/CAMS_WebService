@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CAMS_NEW" Class="dbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=HAKKI-PC;Initial Catalog=CAMS_NEW;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CAMS_NEWConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Announcement" Member="Announcements">
+    <Type Name="Announcement">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ann_Header" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="TextFull" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FinishDate" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Location" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CourseID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DeptID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Category_Announcement" Member="Category" ThisKey="CategoryType" OtherKey="ID" Type="Category" IsForeignKey="true" />
+      <Association Name="Course_Announcement" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
+      <Association Name="Department_Announcement" Member="Department" ThisKey="DeptID" OtherKey="ID" Type="Department" IsForeignKey="true" />
+      <Association Name="Instructor_Announcement" Member="Instructor" ThisKey="UserID" OtherKey="ID" Type="Instructor" IsForeignKey="true" />
+      <Association Name="Student_Announcement" Member="Student" ThisKey="UserID" OtherKey="ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CategoryName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Durum" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Category_Announcement" Member="Announcements" ThisKey="ID" OtherKey="CategoryType" Type="Announcement" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CATEGORY_USER" Member="CATEGORY_USERs">
+    <Type Name="CATEGORY_USER">
+      <Column Name="CategoryUserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CategoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="USER_CATEGORY_USER" Member="USER" ThisKey="UserID" OtherKey="UserID" Type="USER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseTitle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseCode" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseDept" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Credit" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Semester" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="AcademicYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Announcement" Member="Announcements" ThisKey="ID" OtherKey="CourseID" Type="Announcement" />
+      <Association Name="Course_CourseInstructorRelation" Member="CourseInstructorRelations" ThisKey="ID" OtherKey="CourseID" Type="CourseInstructorRelation" />
+      <Association Name="Course_StudentCourseRelation" Member="StudentCourseRelations" ThisKey="ID" OtherKey="CourseID" Type="StudentCourseRelation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseInstructorRelation" Member="CourseInstructorRelations">
+    <Type Name="CourseInstructorRelation">
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="InstructorID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Course_CourseInstructorRelation" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
+      <Association Name="Instructor_CourseInstructorRelation" Member="Instructor" ThisKey="InstructorID" OtherKey="ID" Type="Instructor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Department" Member="Departments">
+    <Type Name="Department">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DeptName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Department_Announcement" Member="Announcements" ThisKey="ID" OtherKey="DeptID" Type="Announcement" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Instructor" Member="Instructors">
+    <Type Name="Instructor">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="PartTime" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="SicilNo" Type="System.String" DbType="NVarChar(6)" CanBeNull="true" />
+      <Column Name="BolumDisi" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Instructor_Announcement" Member="Announcements" ThisKey="ID" OtherKey="UserID" Type="Announcement" />
+      <Association Name="Instructor_CourseInstructorRelation" Member="CourseInstructorRelations" ThisKey="ID" OtherKey="InstructorID" Type="CourseInstructorRelation" />
+      <Association Name="USER_Instructor" Member="USER" ThisKey="UserID" OtherKey="UserID" Type="USER" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StudentNumber" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Mezun" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DoubleMajor" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DoubleMinor" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Student_Announcement" Member="Announcements" ThisKey="ID" OtherKey="UserID" Type="Announcement" />
+      <Association Name="Student_StudentCourseRelation" Member="StudentCourseRelations" ThisKey="ID" OtherKey="UserID" Type="StudentCourseRelation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentCourseRelation" Member="StudentCourseRelations">
+    <Type Name="StudentCourseRelation">
+      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Course_StudentCourseRelation" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
+      <Association Name="Student_StudentCourseRelation" Member="Student" ThisKey="UserID" OtherKey="ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[USER]" Member="USERs">
+    <Type Name="USER">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DeptID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Durum" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="USER_CATEGORY_USER" Member="CATEGORY_USERs" ThisKey="UserID" OtherKey="UserID" Type="CATEGORY_USER" />
+      <Association Name="USER_Instructor" Member="Instructors" ThisKey="UserID" OtherKey="UserID" Type="Instructor" />
+      <Association Name="USERTYPE_USER" Member="USERTYPE" ThisKey="UserTypeID" OtherKey="UserTypeID" Type="USERTYPE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USERTYPE" Member="USERTYPEs">
+    <Type Name="USERTYPE">
+      <Column Name="UserTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserType" Member="UserType1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Durum" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="USERTYPE_USER" Member="USERs" ThisKey="UserTypeID" OtherKey="UserTypeID" Type="USER" />
+    </Type>
+  </Table>
+</Database>
